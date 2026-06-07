@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Prep Time Predictor</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .container {
+            margin: 40px auto;
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+        }
+        button {
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            width: 100%;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f5e9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🍽 Food Prep Time Predictor</h2>
+
+    <form method="POST">
+        <input type="text" name="items" placeholder="Items (e.g. chicken biryani, naan)" required>
+
+        <input type="number" name="hour" placeholder="Hour (0-23)" required>
+
+        <select name="rain">
+            <option value="0">No Rain</option>
+            <option value="1">Rain</option>
+        </select>
+
+        <select name="event">
+            <option value="0">No Event</option>
+            <option value="1">Special Event</option>
+        </select>
+
+        <input type="number" name="kitchen_load" placeholder="Kitchen Load (1-20)" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            {% if prediction.error %}
+                <p>Error: {{ prediction.error }}</p>
+            {% else %}
+                <h3>Prediction Result</h3>
+                <p>⏱ 50% Ready In: <b>{{ prediction.p50_ready_time }} mins</b></p>
+                <p>⚠ 90% Ready In: <b>{{ prediction.p90_ready_time }} mins</b></p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
